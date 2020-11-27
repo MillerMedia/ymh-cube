@@ -1,4 +1,3 @@
-import struct
 import os
 
 def open_binary_file(file_path):
