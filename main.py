@@ -30,25 +30,40 @@ for content in os.listdir(input_directory):
 	# If it is a directory, continue to drill down more
 	if os.path.isdir(input_directory + content):
 		for file in os.listdir(input_directory + content):
+			# Skip hidden files
+			if file.startswith('.'): continue
+
 			file_path = input_directory + content + '/' + file
-			audio_bytes = open_binary_file(file_path)
 
-			output = first_frame + audio_bytes
-			output_path = output_directory + content + '/' + file
-			write_binary_file(output_path, output)
-
-			# Convert it to 48000 mp3 if not already
-			filename_output, file_extension = os.path.splitext(output_path)
-
-			#if file_extension is not '.mp3':
-			# Create file in tmp directory
 			tmp_path = output_directory + content + '/tmp/' + file
+			tmp_output, tmp_extension = os.path.splitext(tmp_path)
+			tmp_path = tmp_output + '.mp3'
+
+			output_path = output_directory + content + '/' + file
+			filename_output, file_extension = os.path.splitext(output_path)
+			output_path = filename_output + '.mp3'
 
 			if not os.path.isdir(output_directory + content + '/tmp'):
 				os.mkdir(output_directory + content + '/tmp')
 
-			copyfile(output_path, tmp_path)
-			subprocess.call(['ffmpeg', '-y', '-i', tmp_path, '-ar', '48000', filename_output + '.mp3'])
+			subprocess_array = [
+				'ffmpeg',
+				'-y',
+				'-i',
+				file_path,
+				'-ar',
+				'48000',
+				'-acodec',
+				'libmp3lame',
+			]
+
+			subprocess_array.append(tmp_path)
+			subprocess.call(subprocess_array)
+
+			audio_bytes = open_binary_file(tmp_path)
+			output = first_frame + audio_bytes
+			write_binary_file(output_path, output)
+
 			os.remove(tmp_path)
 
 		# when done with directory, remove tmp folder
