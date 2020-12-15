@@ -6,4 +6,4 @@
 
 • This script will also automatically the files to the external hard drive if you have it inserted into the computer you run the script on. You simply need to rename the drive to whatever you would like and update the `volume_name` variable in the script.  
 
-• As a bonus for YMH fans, I have added the drops and songs I collected into the 'output' folder. More will be added as collect them!
+• As a bonus for YMH (https://ymhstudios.com/yourmomshouse/) fans, I have added the drops and songs I collected into the 'output' folder. More will be added as collect them! If you haven't seen it already, this hack has been featured on episode #579 of the podcast here: https://youtu.be/NmTqUZKaqnU?t=3075
