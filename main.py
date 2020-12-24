@@ -17,7 +17,9 @@ volume_name = 'YMH'
 directories_to_add_in_order = ['Affirmations', 'Daily Inspirations', 'Sermon']
 
 # Load frame we are prepending to all audio files
-first_frame = open_binary_file('first-frame.txt')
+first_frame_affirmations = open_binary_file('first_frame_affirmations.txt')
+first_frame_daily_inspirations = open_binary_file('first_frame_daily_inspirations.txt')
+first_frame_sermons = open_binary_file('first_frame_sermons.txt')
 
 # Loop through the input directory and output converted files to the output directory
 input_directory = 'input/'
@@ -26,6 +28,13 @@ output_directory = 'output/'
 for content in os.listdir(input_directory):
 	# If the subdirectory is not in the directories array, continue
 	if content not in directories_to_add_in_order: continue
+
+	if content=='Affirmations':
+		first_frame = first_frame_affirmations
+	elif content=='Daily Inspirations':
+		first_frame = first_frame_daily_inspirations
+	elif content=='Sermon':
+		first_frame = first_frame_sermons
 
 	# If it is a directory, continue to drill down more
 	if os.path.isdir(input_directory + content):
